@@ -124,7 +124,7 @@ export default function SignupScreen() {
                                 </Pressable>
                             </View>
 
-                            <Pressable style={styles.signupBtn} onPress={() => navigation.navigate("Login")}>
+                            <Pressable style={styles.signupBtn} onPress={() => navigation.navigate("Onboarding")}>
                                 <Text style={styles.signupText}>Create Account</Text>
                             </Pressable>
 
@@ -173,11 +173,11 @@ const styles = StyleSheet.create({
 
     header: { marginTop: 6, marginBottom: 18 },
     h1: { color: "#fff", fontSize: 30, fontWeight: "800" },
-    h2: { color: "#ff2d2d", marginTop: 4, fontSize: 13, fontWeight: "600" },
+    h2: { color: "#ff2d2d", marginTop: 4, fontSize: 13, fontFamily: "Montserrat-SemiBold", },
 
     form: { marginTop: 8 },
 
-    label: { color: "#fff", fontSize: 13, fontWeight: "700", marginBottom: 8 },
+    label: { color: "#fff", fontSize: 13, fontFamily: "Montserrat-Bold", marginBottom: 8 },
 
     inputWrap: {
         height: 52,
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 18,
     },
-    muted: { color: "#cfcfcf", fontSize: 12, fontWeight: "600" },
+    muted: { color: "#cfcfcf", fontSize: 12, fontFamily: "Montserrat-SemiBold", },
     loginLink: { color: "#fff", fontSize: 12, fontWeight: "800" },
 
     orText: {
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
         color: "#cfcfcf",
         marginTop: 18,
         fontSize: 12,
-        fontWeight: "600",
+        fontFamily: "Montserrat-SemiBold",
     },
 
     socialRow: {

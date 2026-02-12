@@ -35,21 +35,19 @@ export default function Share() {
                 {/* HEADER */}
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
-                        <View style={styles.avatar}>
-                            <Icon name="user" size={18} color="#fff" />
+                        <View>
+                            <Image
+                                source={Images.profileIcon}
+                                style={{ width: 54, height: 54 }}
+                                resizeMode="contain"
+                            />
                         </View>
+
                         <View>
                             <Text style={styles.greet}>Morning SAM!</Text>
                             <Text style={styles.sub}>How Are You Doing Today?</Text>
                         </View>
                     </View>
-
-                    <Icon
-                        name="sliders"
-                        size={26}
-                        color="#fff"
-                        style={{ transform: [{ rotate: "90deg" }] }}
-                    />
                 </View>
 
                 {/* SHARE CARD */}
@@ -105,29 +103,17 @@ const styles = StyleSheet.create({
 
     /* HEADER */
     header: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
         paddingHorizontal: 20,
-        paddingTop: Platform.OS === "ios" ? 60 : 50,
-        paddingBottom: 16,
+        paddingTop: 50,
+        paddingBottom: 10,
     },
     headerLeft: {
         flexDirection: "row",
         alignItems: "center",
         gap: 12,
     },
-    avatar: {
-        width: 38,
-        height: 38,
-        borderRadius: 19,
-        borderWidth: 1,
-        borderColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    greet: { color: "#fff", fontSize: 16, fontWeight: "800" },
-    sub: { color: "#cfcfcf", fontSize: 12 },
+    greet: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold" },
+    sub: { color: "#999999", fontSize: 12, fontFamily: "Montserrat-Bold" },
 
     /* SHARE CARD */
     sheet: {
@@ -174,7 +160,7 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         borderRadius: 6,
     },
-    durationText: { color: "#fff", fontSize: 10, fontWeight: "700" },
+    durationText: { color: "#fff", fontSize: 10, fontFamily: "Montserrat-Bold", },
 
     /* BOTTOM TABS */
     bottomTabs: {

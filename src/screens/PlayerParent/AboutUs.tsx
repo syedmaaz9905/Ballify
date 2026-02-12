@@ -5,7 +5,7 @@ import { Images } from "../../assets";
 import { useNavigation } from "@react-navigation/native";
 
 const BODY =
-    "Lorem Ipsum Quia Dolor Sit Porro Quisquam Est Qui Amet Consectetur Adipisci, Sed Quia Duis Aut Iure Dolor In Reprehenderit Dolore Magna Aliqua. Porro Quisquam Est Qui Nisi Ut Aliquid Ex Ea Commodi. Culpa Quia Officia Deserunt Ex Mollit Anim Id Est Laborum.\n\nHowever, Modern Generators Let You Add Personality To Your Placeholder Text While Maintaining The Same Benefits. From Pirate Speak To Cupcake Ingredients, These Specialized Generators Help Your Mockups Feel More Aligned With Your Brand’s Tone And Industry. Here Are Some Creative Alternatives:";
+    "Lorem ipsum quia dolor sit porro quisquam est qui amet consectetur adipisci, sed quia duis aute irure dolor in reprehenderit dolore magna aliqua, porro quisquan est qui nisi ut aliquid ex ea commodo. Culpa quia officia deserunt mollit anim id est laborum. However, modern generators let you add personality to your placeholder text while maintaining the same benefits. From pirate speak to cupcake ingredients, these specialized generators help your mockups feel more aligned with your brand's tone and industry. Here are some creative alternatives:";
 
 export default function AboutUs() {
     const navigation = useNavigation();
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     card: {
         borderRadius: 26,
         borderWidth: 2,
-        borderColor: "#ff1e1e",
+        borderColor: "#E8130D",
         backgroundColor: "rgba(0,0,0,0.60)",
         overflow: "hidden",
         paddingHorizontal: 18,
@@ -57,16 +57,16 @@ const styles = StyleSheet.create({
     },
 
     cardContent: { paddingBottom: 6 },
-    title: { color: "#ff1e1e", fontSize: 30, fontWeight: "900", textAlign: "center", marginBottom: 12 },
-    body: { color: "#eaeaea", fontSize: 12, lineHeight: 18, textAlign: "center", opacity: 0.92 },
+    title: { color: "#E8130D", fontSize: 40, fontFamily: "Montserrat-Bold", textAlign: "center", marginBottom: 12 },
+    body: { color: "#fff", fontSize: 15, fontWeight: '600', lineHeight: 22, textAlign: "center" },
 
     btn: {
         height: 54,
         borderRadius: 14,
-        backgroundColor: "#ff1e1e",
+        backgroundColor: "#E8130D",
         alignItems: "center",
         justifyContent: "center",
         marginTop: 22,
     },
-    btnText: { color: "#fff", fontSize: 15, fontWeight: "900" },
+    btnText: { color: "#fff", fontSize: 24, fontWeight: "500" },
 });

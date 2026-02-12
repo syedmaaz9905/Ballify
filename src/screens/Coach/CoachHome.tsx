@@ -56,21 +56,19 @@ export default function CoachHome() {
                 {/* HEADER */}
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
-                        <View style={styles.avatar}>
-                            <Icon name="user" size={18} color="#fff" />
+                        <View>
+                            <Image
+                                source={Images.profileIcon}
+                                style={{ width: 54, height: 54 }}
+                                resizeMode="contain"
+                            />
                         </View>
+
                         <View>
                             <Text style={styles.greet}>Morning SAM!</Text>
                             <Text style={styles.sub}>How Are You Doing Today?</Text>
                         </View>
                     </View>
-
-                    <Icon
-                        name="sliders"
-                        size={26}
-                        color="#fff"
-                        style={{ transform: [{ rotate: "90deg" }] }}
-                    />
                 </View>
 
                 {/* CARD */}
@@ -137,25 +135,17 @@ const styles = StyleSheet.create({
 
     /* HEADER */
     header: {
+        paddingHorizontal: 20,
+        paddingTop: 50,
+        paddingBottom: 10,
+    },
+    headerLeft: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: 20,
-        paddingTop: Platform.OS === "ios" ? 60 : 50,
-        paddingBottom: 14,
+        gap: 12,
     },
-    headerLeft: { flexDirection: "row", alignItems: "center", gap: 12 },
-    avatar: {
-        width: 38,
-        height: 38,
-        borderRadius: 19,
-        borderWidth: 1,
-        borderColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    greet: { color: "#fff", fontSize: 16, fontWeight: "800" },
-    sub: { color: "#cfcfcf", fontSize: 12 },
+    greet: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold" },
+    sub: { color: "#999999", fontSize: 12, fontFamily: "Montserrat-Bold" },
 
     /* CARD */
     sheet: {
@@ -187,7 +177,7 @@ const styles = StyleSheet.create({
         gap: 8,
         marginBottom: 12,
     },
-    searchInput: { flex: 1, color: "#111", fontSize: 14, fontWeight: "600" },
+    searchInput: { flex: 1, color: "#111", fontSize: 14, fontFamily: "Montserrat-SemiBold", },
 
     /* ROWS */
     teamRow: {

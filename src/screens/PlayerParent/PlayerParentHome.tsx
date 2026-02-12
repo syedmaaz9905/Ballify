@@ -6,6 +6,7 @@ import {
     ImageBackground,
     Pressable,
     Dimensions,
+    Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { Images } from "../../assets";
@@ -29,23 +30,19 @@ export default function PlayerParentHome() {
                 {/* HEADER */}
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
-                        <View style={styles.avatar}>
-                            <Icon name="user" size={20} color="#fff" />
+                        <View>
+                            <Image
+                                source={Images.profileIcon}
+                                style={{ width: 54, height: 54 }}
+                                resizeMode="contain"
+                            />
                         </View>
+
                         <View>
                             <Text style={styles.greet}>Morning SAM!</Text>
                             <Text style={styles.sub}>How Are You Doing Today?</Text>
                         </View>
                     </View>
-
-                    <Pressable>
-                        <Icon
-                            name="sliders"
-                            size={30}
-                            color="#fff"
-                            style={{ transform: [{ rotate: "90deg" }] }}
-                        />
-                    </Pressable>
                 </View>
 
                 {/* BODY */}
@@ -94,37 +91,17 @@ const styles = StyleSheet.create({
 
     /* HEADER */
     header: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
         paddingHorizontal: 20,
         paddingTop: 50,
-        paddingBottom: 20,
+        paddingBottom: 10,
     },
     headerLeft: {
         flexDirection: "row",
         alignItems: "center",
         gap: 12,
     },
-    avatar: {
-        width: 42,
-        height: 42,
-        borderRadius: 21,
-        borderWidth: 1,
-        borderColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    greet: {
-        color: "#fff",
-        fontSize: 20,
-        fontWeight: "800",
-    },
-    sub: {
-        color: "#cfcfcf",
-        fontSize: 12,
-        marginTop: 2,
-    },
+    greet: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold" },
+    sub: { color: "#999999", fontSize: 12, fontFamily: "Montserrat-Bold" },
 
     /* BODY */
     body: {
@@ -138,6 +115,13 @@ const styles = StyleSheet.create({
         height: CARD_HEIGHT,
         borderRadius: 16,
         overflow: "hidden",
+
+        shadowColor: "#000000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25,
+        shadowRadius: 6.8,
+
+        elevation: 6,
     },
     cardBg: {
         flex: 1,
@@ -147,12 +131,12 @@ const styles = StyleSheet.create({
     cardOverlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: "#B70003",
-        opacity: 0.6,
+        opacity: 0.5,
     },
     cardText: {
         color: "#fff",
-        fontSize: 20,
-        fontWeight: "900",
+        fontSize: 30,
+        fontFamily: "Montserrat-Bold",
         letterSpacing: 0.5,
     },
 });

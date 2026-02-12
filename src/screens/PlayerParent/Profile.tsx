@@ -45,7 +45,7 @@ export default function Profile() {
                         right={<Icon name="chevron-right" size={20} color="#fff" />}
                     /> */}
 
-                    <Pressable style={styles.row}>
+                    <Pressable style={[styles.row, { marginTop: 6 }]}>
                         <Text style={styles.rowText}>Language</Text>
                         <Text style={styles.valueText}>English</Text>
                     </Pressable>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 18,
         paddingVertical: 16,
     },
-    title: { color: "#fff", fontSize: 20, fontWeight: "900" },
+    title: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold", },
     divider: { height: 1, backgroundColor: "rgba(255,255,255,0.18)" },
 
     row: {
@@ -107,9 +107,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         paddingHorizontal: 18,
-        paddingVertical: 14,
+        paddingVertical: 6,
     },
-    rowText: { color: "#fff", fontSize: 14, fontWeight: "600" },
+    rowText: { color: "#fff", fontSize: 14, fontFamily: "Montserrat-Regular", },
     valueText: { color: "#ff1e1e", fontSize: 12, fontWeight: "800" },
 
     sectionDivider: {
@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(255,255,255,0.18)",
     },
     sectionTitle: {
-        color: "#ff1e1e",
-        fontSize: 14,
-        fontWeight: "800",
+        color: "#FF0004",
+        fontSize: 18,
+        fontFamily: "Montserrat-Bold",
         paddingHorizontal: 18,
         paddingTop: 18,
         paddingBottom: 10,

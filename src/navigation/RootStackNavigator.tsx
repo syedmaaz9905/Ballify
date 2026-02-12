@@ -13,12 +13,14 @@ import AboutUs from "../screens/PlayerParent/AboutUs";
 import PrivacyPolicy from "../screens/PlayerParent/PrivacyPolicy";
 import CoachPlayers from "../screens/Coach/CoachPlayers";
 import SelectedPlayerProfile from "../screens/Coach/SelectedPlayerProfile";
+import ChooseRoleScreen from "../screens/Auth/ChooseRoleScreen";
 
 export type RootStackParamList = {
     Splash: undefined;
     Login: undefined;
     Signup: undefined;
     Onboarding: undefined;
+    ChooseRole: undefined;
 
     PlayerParentHome: undefined;
     CoachHome: undefined;
@@ -41,6 +43,7 @@ export default function RootStackNavigator() {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+            <Stack.Screen name="ChooseRole" component={ChooseRoleScreen} />
 
             <Stack.Screen name="PlayerParentHome" component={PlayerParentHome} />
             <Stack.Screen name="Share" component={Share} />

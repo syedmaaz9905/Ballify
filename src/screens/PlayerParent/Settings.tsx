@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         borderRadius: 26,
         borderWidth: 2,
         borderColor: "#ff1e1e",
-        backgroundColor: "rgba(0,0,0,0.55)",
+        backgroundColor: "#000",
         overflow: "hidden",
     },
 
@@ -120,13 +120,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 18,
         paddingVertical: 16,
     },
-    title: { color: "#fff", fontSize: 20, fontWeight: "900" },
+    title: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold", },
     divider: { height: 1, backgroundColor: "rgba(255,255,255,0.18)" },
 
     sectionTitle: {
-        color: "#ff1e1e",
-        fontSize: 14,
-        fontWeight: "800",
+        color: "#FF0004",
+        fontSize: 18,
+        fontFamily: "Montserrat-Bold",
         paddingHorizontal: 18,
         paddingTop: 18,
         paddingBottom: 10,
@@ -137,9 +137,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         paddingHorizontal: 18,
-        paddingVertical: 14,
+        paddingVertical: 6,
     },
-    rowText: { color: "#fff", fontSize: 14, fontWeight: "600" },
+    rowText: { color: "#fff", fontSize: 14, fontFamily: "Montserrat-Regular", },
 
     sectionDivider: {
         height: 1,
