@@ -29,7 +29,7 @@ export default function ChooseRoleScreen() {
                         <View>
                             <Image
                                 source={Images.profileIcon}
-                                style={{ width: 54, height: 54 }}
+                                style={{ width: 45, height: 45 }}
                                 resizeMode="contain"
                             />
                         </View>
@@ -115,15 +115,15 @@ const styles = StyleSheet.create({
         gap: 12,
     },
 
-    greet: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold" },
-    sub: { color: "#999999", fontSize: 12, fontFamily: "Montserrat-Bold" },
+    greet: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
+    sub: { color: "#999999", fontSize: 10, fontFamily: "Montserrat-Bold" },
 
     card: {
         marginTop: 60,
         marginHorizontal: 18,
         borderRadius: 30,
         padding: 18,
-        backgroundColor: "rgba(255,255,255,0.10)",
+        backgroundColor: "rgba(255,255,255,0.08)",
         borderWidth: 1,
         borderColor: "rgba(255,255,255,0.12)",
     },
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         width: "100%",
         paddingVertical: 14,
         paddingHorizontal: 12,
-        backgroundColor: "rgba(0,0,0,0.5)",
+        backgroundColor: "rgba(0,0,0,0.8)",
         borderRadius: 12,
         alignItems: "center",
         justifyContent: "center",
@@ -162,14 +162,14 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         paddingHorizontal: 14,
         borderRadius: 16,
-        backgroundColor: "rgba(0,0,0,0.75)",
-        borderWidth: 1.2,
-        borderColor: "#ff1e1e",
+        backgroundColor: "#000",
+        borderWidth: 1,
+        borderColor: "#FF0000",
         marginTop: 14,
     },
     roleActive: {
-        backgroundColor: "rgba(0,0,0,0.85)",
-        shadowColor: "#ff1e1e",
+        backgroundColor: "#000",
+        shadowColor: "#FF0000",
         shadowOpacity: 0.35,
         shadowRadius: 10,
         shadowOffset: { width: 0, height: 6 },

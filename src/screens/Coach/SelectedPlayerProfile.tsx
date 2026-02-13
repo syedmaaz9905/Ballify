@@ -62,7 +62,7 @@ export default function SelectedPlayerProfile() {
                         <View>
                             <Image
                                 source={Images.profileIcon}
-                                style={{ width: 54, height: 54 }}
+                                style={{ width: 45, height: 45 }}
                                 resizeMode="contain"
                             />
                         </View>
@@ -78,7 +78,7 @@ export default function SelectedPlayerProfile() {
                 <View style={[styles.sheet, { marginBottom: TAB_GAP }]}>
                     <View style={styles.topRow}>
                         <Pressable onPress={() => navigation.goBack()} style={styles.backBtn}>
-                            <Icon name="arrow-left" size={18} color="#fff" />
+                            <Icon name="arrow-left" size={24} color="#fff" />
                         </Pressable>
 
                         <Text style={styles.topTitle}>Player Profile</Text>
@@ -214,8 +214,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 12,
     },
-    greet: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold" },
-    sub: { color: "#999999", fontSize: 12, fontFamily: "Montserrat-Bold" },
+    greet: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
+    sub: { color: "#999999", fontSize: 10, fontFamily: "Montserrat-Bold" },
 
     /* SHEET */
     sheet: {
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     backBtn: { width: 34, height: 28, alignItems: "center", justifyContent: "center" },
-    topTitle: { color: "#fff", fontSize: 16, fontWeight: "900" },
+    topTitle: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
 
     /* PLAYER CARD */
     playerCard: {
@@ -246,48 +246,47 @@ const styles = StyleSheet.create({
         gap: 12,
         borderRadius: 14,
         backgroundColor: "#222222",
-        borderWidth: 1,
-        borderColor: "rgba(255,30,30,0.55)",
         padding: 10,
         marginBottom: 12,
         alignItems: "center",
+        paddingVertical: 14,
     },
     playerImgWrap: {
         width: 72,
         height: 72,
-        borderRadius: 12,
-        backgroundColor: "rgba(255,255,255,0.08)",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
     },
     playerImg: { width: 62, height: 62, resizeMode: "contain" },
-    playerName: { color: "#fff", fontSize: 18, fontWeight: "900", lineHeight: 20 },
-    playerMeta: { color: "#ff1e1e", fontSize: 11, fontWeight: "800", marginTop: 4 },
+    playerName: { color: "#fff", fontSize: 22, fontFamily: "Montserrat-Bold", lineHeight: 22 },
+    playerMeta: { color: "#FF0000", fontSize: 13, fontFamily: "Montserrat-Regular", marginTop: 4 },
 
     followBtn: {
-        height: 26,
-        paddingHorizontal: 16,
+        height: 28,
+        paddingHorizontal: 32,
         borderRadius: 999,
-        backgroundColor: "rgba(255,255,255,0.12)",
+        backgroundColor: "#000",
+        borderWidth: 1,
+        borderColor: "#FF0000",
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "flex-start",
         marginTop: 8,
     },
-    followText: { color: "#fff", fontSize: 11, fontWeight: "800" },
+    followText: { color: "#fff", fontSize: 12, fontFamily: "Montserrat-Medium" },
 
     /* TABS */
     tabsRow: {
         flexDirection: "row",
-        paddingHorizontal: 6,
+        paddingHorizontal: 0,
         marginBottom: 12,
         borderBottomWidth: 2,
         borderBottomColor: "rgba(255,255,255,0.65)",
     },
     tabBtn: { flex: 1, alignItems: "center", paddingVertical: 10, position: "relative" },
-    tabText: { color: "rgba(255,255,255,0.65)", fontSize: 11, fontWeight: "800" },
-    tabTextActive: { color: "#ff1e1e" },
+    tabText: { color: "#fff", fontSize: 12, fontFamily: "Montserrat-Regular" },
+    tabTextActive: { color: "#FF0101" },
     tabUnderline: { position: "absolute", bottom: -2, height: 2, width: "100%", backgroundColor: "#ff1e1e" },
 
     /* SCORES LIST */
@@ -301,8 +300,8 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         marginBottom: 10,
     },
-    matchLeftTop: { color: "#fff", fontSize: 11, fontWeight: "900" },
-    matchLeftBottom: { color: "rgba(255,255,255,0.7)", fontSize: 10, marginTop: 3, fontFamily: "Montserrat-Bold", },
+    matchLeftTop: { color: "#fff", fontSize: 12, fontFamily: "Montserrat-SemiBold", },
+    matchLeftBottom: { color: "#fff", fontSize: 11, marginTop: 1, fontFamily: "Montserrat-Regular", },
 
     matchRight: {
         alignItems: "flex-start",
@@ -312,8 +311,8 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderRadius: 8,
     },
-    matchRightTop: { color: "#fff", fontSize: 10, fontWeight: "900" },
-    matchRightBottom: { color: "rgba(255,255,255,0.7)", fontSize: 10, marginTop: 3, fontWeight: "800" },
+    matchRightTop: { color: "#fff", fontSize: 11, fontFamily: "Montserrat-Regular", },
+    matchRightBottom: { color: "#fff", fontSize: 11, fontFamily: "Montserrat-Regular", },
 
     /* STATUS */
     statusCard: {

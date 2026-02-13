@@ -15,7 +15,7 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/RootStackNavigator";
 
 const { width } = Dimensions.get("window");
-const CARD_HEIGHT = Math.min(110, width * 0.28);
+const CARD_HEIGHT = Math.min(114, width * 0.28);
 
 export default function PlayerParentHome() {
 
@@ -33,7 +33,7 @@ export default function PlayerParentHome() {
                         <View>
                             <Image
                                 source={Images.profileIcon}
-                                style={{ width: 54, height: 54 }}
+                                style={{ width: 45, height: 45 }}
                                 resizeMode="contain"
                             />
                         </View>
@@ -100,15 +100,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 12,
     },
-    greet: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold" },
-    sub: { color: "#999999", fontSize: 12, fontFamily: "Montserrat-Bold" },
+    greet: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
+    sub: { color: "#999999", fontSize: 10, fontFamily: "Montserrat-Bold" },
 
     /* BODY */
     body: {
         flex: 1,
         justifyContent: "center",
         paddingHorizontal: 20,
-        gap: 16,
+        gap: 28,
     },
 
     card: {

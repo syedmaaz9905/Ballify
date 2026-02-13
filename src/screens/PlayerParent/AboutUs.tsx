@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
 
     card: {
         borderRadius: 26,
-        borderWidth: 2,
-        borderColor: "#E8130D",
+        borderWidth: 1,
+        borderColor: "#FF0000",
         backgroundColor: "rgba(0,0,0,0.60)",
         overflow: "hidden",
         paddingHorizontal: 18,
@@ -57,16 +57,16 @@ const styles = StyleSheet.create({
     },
 
     cardContent: { paddingBottom: 6 },
-    title: { color: "#E8130D", fontSize: 40, fontFamily: "Montserrat-Bold", textAlign: "center", marginBottom: 12 },
-    body: { color: "#fff", fontSize: 15, fontWeight: '600', lineHeight: 22, textAlign: "center" },
+    title: { color: "#E8130D", fontSize: 38, fontFamily: "Montserrat-Bold", textAlign: "center", marginBottom: 12 },
+    body: { color: "#fff", fontSize: 14, fontFamily: 'Montserrat-SemiBold', textAlign: "center" },
 
     btn: {
         height: 54,
-        borderRadius: 14,
+        borderRadius: 15,
         backgroundColor: "#E8130D",
         alignItems: "center",
         justifyContent: "center",
         marginTop: 22,
     },
-    btnText: { color: "#fff", fontSize: 24, fontWeight: "500" },
+    btnText: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Medium" },
 });

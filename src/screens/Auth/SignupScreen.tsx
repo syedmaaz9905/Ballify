@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 20,
     },
-    signupText: { color: "#fff", fontSize: 16, fontWeight: "800" },
+    signupText: { color: "#fff", fontSize: 18, fontFamily: "Montserrat-Medium" },
 
     loginRow: {
         flexDirection: "row",
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
         marginTop: 18,
     },
     muted: { color: "#cfcfcf", fontSize: 12, fontFamily: "Montserrat-SemiBold", },
-    loginLink: { color: "#fff", fontSize: 12, fontWeight: "800" },
+    loginLink: { color: "#fff", fontSize: 12, fontFamily: "Montserrat-Bold" },
 
     orText: {
         textAlign: "center",

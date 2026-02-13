@@ -11,4 +11,5 @@ export const Images = {
     playerRoleIcon: require("./images/playerRoleIcon.png"),
     coachRoleIcon: require("./images/coachRoleIcon.png"),
     prevIcon: require("./images/prevIcon.png"),
+    searchIcon: require("./images/searchIcon.png"),
 };

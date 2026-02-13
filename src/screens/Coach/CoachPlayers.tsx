@@ -34,8 +34,6 @@ const PLAYERS: Player[] = [
     { id: "3", name: "Jaylen Brown", age: 29 },
     { id: "4", name: "Josh Minott", age: 23 },
     { id: "5", name: "Derrick White", age: 31 },
-    { id: "6", name: "Jayson Tatum", age: 27 },
-    { id: "7", name: "Jayson Tatum", age: 27 },
 ];
 
 export default function CoachPlayers() {
@@ -60,7 +58,7 @@ export default function CoachPlayers() {
                         <View>
                             <Image
                                 source={Images.profileIcon}
-                                style={{ width: 54, height: 54 }}
+                                style={{ width: 45, height: 45 }}
                                 resizeMode="contain"
                             />
                         </View>
@@ -77,7 +75,7 @@ export default function CoachPlayers() {
                     {/* Top row */}
                     <View style={styles.topRow}>
                         <Pressable onPress={() => navigation.goBack()} style={styles.backBtn}>
-                            <Icon name="arrow-left" size={18} color="#fff" />
+                            <Icon name="arrow-left" size={24} color="#fff" />
                         </Pressable>
 
                         <Text style={styles.topTitle}>Player</Text>
@@ -87,13 +85,14 @@ export default function CoachPlayers() {
 
                     {/* Search */}
                     <View style={styles.searchWrap}>
-                        <Icon name="search" size={16} color="#999" />
+                        <Image source={Images.searchIcon} style={styles.searchIcon} resizeMode="contain" />
                         <TextInput
                             value={query}
                             onChangeText={setQuery}
                             placeholder="Search"
                             placeholderTextColor="#999"
                             style={styles.searchInput}
+                            textAlignVertical="center"
                         />
                     </View>
 
@@ -102,7 +101,7 @@ export default function CoachPlayers() {
                         <View style={styles.teamHeader}>
                             <Image source={Images.logo} style={styles.teamLogo} />
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.teamNameBig}>BOSTON</Text>
+                                <Text style={[styles.teamNameBig, { fontSize: 22 }]}>BOSTON</Text>
                                 <Text style={styles.teamNameBig}>CELTICS</Text>
                                 <View style={styles.teamMetaRow}>
                                     <Text style={styles.teamMeta}>Profile</Text>
@@ -111,9 +110,11 @@ export default function CoachPlayers() {
                             </View>
                         </View>
 
+                        {/* ✅ COLS: Name | Age | Action */}
                         <View style={styles.colsHeader}>
-                            <Text style={styles.colLeft}>Name</Text>
-                            <Text style={styles.colRight}>Age</Text>
+                            <Text style={[styles.colText, styles.colName]}>Name</Text>
+                            <Text style={[styles.colText, styles.colAge]}>Age</Text>
+                            <Text style={[styles.colText, styles.colAction]}></Text>
                         </View>
 
                         <FlatList
@@ -128,10 +129,16 @@ export default function CoachPlayers() {
                                         style={styles.row}
                                         onPress={() => setSelectedId(active ? null : item.id)}
                                     >
-                                        <Text style={styles.rowName}>{item.name}</Text>
+                                        {/* Name (left) */}
+                                        <Text style={[styles.rowName, styles.colName]} numberOfLines={1}>
+                                            {item.name}
+                                        </Text>
 
-                                        <View style={styles.ageWrap}>
-                                            <Text style={styles.rowAge}>{item.age}</Text>
+                                        {/* Age (center) */}
+                                        <Text style={[styles.rowAge, styles.colAge]}>{item.age}</Text>
+
+                                        {/* Action (right) */}
+                                        <View style={[styles.actionCell, styles.colAction]}>
                                             <View style={[styles.radio, active && styles.radioActive]}>
                                                 {active ? <View style={styles.radioDot} /> : null}
                                             </View>
@@ -179,8 +186,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 12,
     },
-    greet: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold" },
-    sub: { color: "#999999", fontSize: 12, fontFamily: "Montserrat-Bold" },
+    greet: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
+    sub: { color: "#999999", fontSize: 10, fontFamily: "Montserrat-Bold" },
 
     /* SHEET */
     sheet: {
@@ -208,11 +215,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    topTitle: { color: "#fff", fontSize: 16, fontWeight: "900" },
+    topTitle: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
 
     /* SEARCH */
     searchWrap: {
-        height: 38,
+        height: 40,
         borderRadius: 8,
         backgroundColor: "#fff",
         paddingHorizontal: 10,
@@ -221,7 +228,15 @@ const styles = StyleSheet.create({
         gap: 8,
         marginBottom: 12,
     },
-    searchInput: { flex: 1, color: "#111", fontSize: 14, fontFamily: "Montserrat-SemiBold", },
+    searchInput: {
+        flex: 1,
+        color: "#898989",
+        fontSize: 14,
+        fontFamily: "Montserrat-Regular",
+        paddingVertical: 0,
+        height: "100%",
+    },
+    searchIcon: { width: 16, height: 16 },
 
     /* TEAM CARD */
     teamCard: {
@@ -238,27 +253,31 @@ const styles = StyleSheet.create({
         gap: 12,
         marginBottom: 10,
     },
-    teamLogo: { width: 54, height: 54, borderRadius: 27 },
-    teamNameBig: { color: "#fff", fontSize: 18, fontWeight: "900", lineHeight: 20 },
+    teamLogo: { width: 75, height: 75, borderRadius: 27 },
+    teamNameBig: { color: "#fff", fontSize: 18, fontFamily: "Montserrat-SemiBold", lineHeight: 20 },
     teamMetaRow: { flexDirection: "row", gap: 18, marginTop: 4 },
-    teamMeta: { color: "rgba(255,255,255,0.65)", fontSize: 11, fontFamily: "Montserrat-Bold", },
+    teamMeta: { color: "#989898", fontSize: 14, fontFamily: "Montserrat-Regular" },
 
+    /* ✅ COLUMNS */
     colsHeader: {
         flexDirection: "row",
-        justifyContent: "space-between",
-        paddingVertical: 8,
+        alignItems: "center",
+        paddingVertical: 2,
         paddingHorizontal: 2,
-        borderBottomWidth: 1,
-        borderBottomColor: "rgba(255,255,255,0.12)",
         marginBottom: 6,
     },
-    colLeft: { color: "rgba(255,255,255,0.75)", fontSize: 12, fontWeight: "800" },
-    colRight: { color: "rgba(255,255,255,0.75)", fontSize: 12, fontWeight: "800" },
+    colText: {
+        color: "#FFFFFF",
+        fontSize: 12,
+        fontFamily: "Montserrat-Regular",
+    },
+    colName: { flex: 1, textAlign: "left" },
+    colAge: { width: 52, textAlign: "center" },
+    colAction: { width: 70, textAlign: "right" },
 
     row: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
         borderRadius: 8,
         borderWidth: 1,
         borderColor: "rgba(255,30,30,0.45)",
@@ -267,9 +286,14 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         backgroundColor: "#000",
     },
-    rowName: { color: "#fff", fontSize: 12, fontWeight: "800" },
-    ageWrap: { flexDirection: "row", alignItems: "center", gap: 10 },
-    rowAge: { color: "#fff", fontSize: 12, fontWeight: "800", width: 24, textAlign: "right" },
+
+    rowName: { color: "#fff", fontSize: 12, fontFamily: "Montserrat-Bold" },
+    rowAge: { color: "#fff", fontSize: 12, fontFamily: "Montserrat-Bold" },
+
+    actionCell: {
+        alignItems: "flex-end",
+        justifyContent: "center",
+    },
 
     radio: {
         width: 18,
@@ -291,20 +315,20 @@ const styles = StyleSheet.create({
     },
     actionBtn: {
         flex: 1,
-        height: 44,
-        borderRadius: 8,
+        height: 36,
+        borderRadius: 5,
         alignItems: "center",
         justifyContent: "center",
     },
     actionBtnOutline: {
-        borderWidth: 1.5,
-        borderColor: "#ff1e1e",
+        borderWidth: 1,
+        borderColor: "#FF0000",
         backgroundColor: "#000",
     },
     actionBtnFilled: {
-        borderWidth: 1.5,
-        borderColor: "#ff1e1e",
+        borderWidth: 1,
+        borderColor: "#FF0000",
         backgroundColor: "#000",
     },
-    actionText: { color: "#fff", fontWeight: "900", fontSize: 12 },
+    actionText: { color: "#fff", fontFamily: "Montserrat-Bold", fontSize: 10 },
 });

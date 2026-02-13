@@ -38,7 +38,7 @@ export default function Share() {
                         <View>
                             <Image
                                 source={Images.profileIcon}
-                                style={{ width: 54, height: 54 }}
+                                style={{ width: 45, height: 45 }}
                                 resizeMode="contain"
                             />
                         </View>
@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 12,
     },
-    greet: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold" },
-    sub: { color: "#999999", fontSize: 12, fontFamily: "Montserrat-Bold" },
+    greet: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
+    sub: { color: "#999999", fontSize: 10, fontFamily: "Montserrat-Bold" },
 
     /* SHARE CARD */
     sheet: {

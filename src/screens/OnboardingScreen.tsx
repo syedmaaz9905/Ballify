@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
     },
     title: { color: "#E8130D", fontSize: 48, fontFamily: "Montserrat-Bold" },
-    desc: { color: "#fff", marginTop: 30, marginBottom: 50, textAlign: 'center', fontSize: 15, fontFamily: "Montserrat-SemiBold" },
+    desc: { color: "#fff", marginTop: 30, marginBottom: 50, textAlign: 'center', fontSize: 14, fontFamily: "Montserrat-SemiBold" },
     btn: {
         width: "100%",
         height: 54,
@@ -53,5 +53,5 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    btnText: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Medium" },
+    btnText: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Medium" },
 });

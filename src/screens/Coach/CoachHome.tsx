@@ -11,7 +11,6 @@ import {
     FlatList,
     Image,
 } from "react-native";
-import Icon from "react-native-vector-icons/Feather";
 import { Images } from "../../assets";
 import BottomTabs from "../../components/BottomTabs";
 import { useNavigation } from "@react-navigation/native";
@@ -29,7 +28,7 @@ type Team = {
     logo?: any;
 };
 
-const TEAMS: Team[] = Array.from({ length: 7 }).map((_, i) => ({
+const TEAMS: Team[] = Array.from({ length: 4 }).map((_, i) => ({
     id: String(i + 1),
     name: "Boston Celtics",
     meta: "Profile   Status   Schedule",
@@ -59,7 +58,7 @@ export default function CoachHome() {
                         <View>
                             <Image
                                 source={Images.profileIcon}
-                                style={{ width: 54, height: 54 }}
+                                style={{ width: 45, height: 45 }}
                                 resizeMode="contain"
                             />
                         </View>
@@ -76,13 +75,14 @@ export default function CoachHome() {
                     <Text style={styles.title}>Find Your Team</Text>
 
                     <View style={styles.searchWrap}>
-                        <Icon name="search" size={16} color="#999" />
+                        <Image source={Images.searchIcon} style={styles.searchIcon} resizeMode="contain" />
                         <TextInput
                             value={query}
                             onChangeText={setQuery}
                             placeholder="Search"
                             placeholderTextColor="#999"
                             style={styles.searchInput}
+                            textAlignVertical="center"
                         />
                     </View>
 
@@ -114,9 +114,12 @@ export default function CoachHome() {
                         }}
                     />
 
-                    <Pressable style={styles.primaryBtn} onPress={() => navigation.navigate("CoachPlayers")}>
-                        <Text style={styles.primaryBtnText}>Show Selected Team</Text>
-                    </Pressable>
+                    <View style={styles.btnWrap}>
+                        <Pressable style={styles.primaryBtn} onPress={() => navigation.navigate("CoachPlayers")}>
+                            <Text style={styles.primaryBtnText}>Show Selected Team</Text>
+
+                        </Pressable>
+                    </View>
                 </View>
 
                 <BottomTabs active={null} />
@@ -144,8 +147,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 12,
     },
-    greet: { color: "#fff", fontSize: 24, fontFamily: "Montserrat-Bold" },
-    sub: { color: "#999999", fontSize: 12, fontFamily: "Montserrat-Bold" },
+    greet: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
+    sub: { color: "#999999", fontSize: 10, fontFamily: "Montserrat-Bold" },
 
     /* CARD */
     sheet: {
@@ -153,8 +156,8 @@ const styles = StyleSheet.create({
         marginHorizontal: 14,
         borderRadius: 26,
         borderWidth: 2,
-        borderColor: "#ff1e1e",
-        backgroundColor: "rgba(0,0,0,0.55)",
+        borderColor: "#FF0000",
+        backgroundColor: "rgba(0, 0, 0, 0.65)",
         padding: 14,
         overflow: "hidden",
     },
@@ -177,7 +180,16 @@ const styles = StyleSheet.create({
         gap: 8,
         marginBottom: 12,
     },
-    searchInput: { flex: 1, color: "#111", fontSize: 14, fontFamily: "Montserrat-SemiBold", },
+    searchInput: {
+        flex: 1,
+        color: "#898989",
+        fontSize: 14,
+        fontFamily: "Montserrat-Regular",
+        paddingVertical: 0,
+        height: "100%",
+    },
+
+    searchIcon: { width: 16, height: 16 },
 
     /* ROWS */
     teamRow: {
@@ -193,9 +205,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#222222",
     },
     teamLeft: { flexDirection: "row", alignItems: "center", gap: 10 },
-    teamLogo: { width: 28, height: 28, borderRadius: 14 },
-    teamName: { color: "#fff", fontWeight: "900", fontSize: 13 },
-    teamMeta: { color: "rgba(255,255,255,0.7)", fontSize: 10, marginTop: 2 },
+    teamLogo: { width: 32, height: 32 },
+    teamName: { color: "#fff", fontFamily: "Montserrat-SemiBold", fontSize: 18 },
+    teamMeta: { color: "#989898", fontSize: 12, fontFamily: "Montserrat-Regular" },
 
     radio: {
         width: 18,
@@ -215,15 +227,19 @@ const styles = StyleSheet.create({
     },
 
     /* BTN */
+    btnWrap: {
+        alignItems: "center",
+    },
     primaryBtn: {
         height: 52,
         borderRadius: 6,
         borderWidth: 1,
-        borderColor: "rgba(255,30,30,0.55)",
+        borderColor: "#FF0000",
         backgroundColor: "#000",
         alignItems: "center",
         justifyContent: "center",
         marginTop: 6,
+        width: "88%",
     },
-    primaryBtnText: { color: "#fff", fontWeight: "900", fontSize: 14 },
+    primaryBtnText: { color: "#fff", fontFamily: "Montserrat-Bold", fontSize: 16 },
 });
