@@ -151,7 +151,10 @@ export default function CoachPlayers() {
 
                     {/* Bottom buttons */}
                     <View style={styles.actionsRow}>
-                        <Pressable style={[styles.actionBtn, styles.actionBtnOutline]}>
+                        <Pressable
+                            style={[styles.actionBtn, styles.actionBtnOutline]}
+                            onPress={() => navigation.navigate("TeamStatus")}
+                        >
                             <Text style={styles.actionText}>Show Team Status</Text>
                         </Pressable>
 

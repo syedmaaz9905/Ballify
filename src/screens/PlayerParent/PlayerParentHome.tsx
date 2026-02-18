@@ -47,8 +47,17 @@ export default function PlayerParentHome() {
 
                 {/* BODY */}
                 <View style={styles.body}>
-                    <ActionCard title="Record" bg={Images.RecordBgImg} />
-                    <ActionCard title="Clips" bg={Images.ClipsBgImg} />
+                    <ActionCard
+                        title="Record"
+                        bg={Images.RecordBgImg}
+                        onPress={() => navigation.navigate("Record")}
+                    />
+
+                    <ActionCard
+                        title="Clips"
+                        bg={Images.ClipsBgImg}
+                        onPress={() => navigation.navigate("Clips")}
+                    />
                     <ActionCard
                         title="Share"
                         bg={Images.ShareBgImg}

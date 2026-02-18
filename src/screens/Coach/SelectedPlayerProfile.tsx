@@ -137,22 +137,35 @@ export default function SelectedPlayerProfile() {
                             )}
                         />
                     ) : activeTab === "Status" ? (
-                        <View style={styles.statusCard}>
-                            <Text style={styles.statusTitle}>Season Avg</Text>
+                        <View style={styles.statusCardNew}>
+                            <View style={styles.avgRowWrap}>
+                                {/* LEFT: label */}
+                                <Text style={styles.statusTitleLeft}>Season Avg</Text>
 
-                            <View style={styles.statCols}>
-                                <View style={styles.statCol}>
-                                    <Text style={styles.statHead}>GP</Text>
-                                    <Text style={styles.statVal}>3</Text>
-                                </View>
-                                <View style={styles.statCol}>
-                                    <Text style={styles.statHead}>PST</Text>
-                                    <Text style={styles.statVal}>14</Text>
-                                </View>
-                                <View style={styles.statCol}>
-                                    <Text style={styles.statHead}>REB</Text>
-                                    <Text style={styles.statVal}>3</Text>
-                                </View>
+                                {/* RIGHT: horizontal scroll table */}
+                                <ScrollView
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    contentContainerStyle={styles.avgTable}
+                                >
+                                    <View>
+                                        {/* header row */}
+                                        <View style={styles.avgRow}>
+                                            <Text style={styles.avgHead}>GP</Text>
+                                            <Text style={styles.avgHead}>PST</Text>
+                                            <Text style={styles.avgHead}>REB</Text>
+                                        </View>
+
+                                        <View style={styles.avgDivider} />
+
+                                        {/* value row */}
+                                        <View style={styles.avgRow}>
+                                            <Text style={styles.avgVal}>3</Text>
+                                            <Text style={styles.avgVal}>14</Text>
+                                            <Text style={styles.avgVal}>3</Text>
+                                        </View>
+                                    </View>
+                                </ScrollView>
                             </View>
                         </View>
                     ) : activeTab === "Highlights" ? (
@@ -315,17 +328,56 @@ const styles = StyleSheet.create({
     matchRightBottom: { color: "#fff", fontSize: 11, fontFamily: "Montserrat-Regular", },
 
     /* STATUS */
-    statusCard: {
+    statusCardNew: {
         borderRadius: 14,
         backgroundColor: "#222222",
         paddingHorizontal: 14,
-        paddingVertical: 16,
+        paddingVertical: 12,
     },
-    statusTitle: { color: "#ff1e1e", fontWeight: "900", fontSize: 13, marginBottom: 10 },
-    statCols: { flexDirection: "row", justifyContent: "space-around" },
-    statCol: { alignItems: "center" },
-    statHead: { color: "rgba(255,255,255,0.75)", fontWeight: "900", fontSize: 12, marginBottom: 6 },
-    statVal: { color: "#fff", fontWeight: "900", fontSize: 14 },
+
+    avgRowWrap: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+
+    statusTitleLeft: {
+        color: "#ff1e1e",
+        fontSize: 13,
+        fontFamily: "Montserrat-Bold",
+        marginRight: 12,
+    },
+
+    avgTable: {
+        paddingRight: 6,
+    },
+
+    avgRow: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+
+    avgHead: {
+        width: 62,
+        textAlign: "center",
+        color: "rgba(255,255,255,0.85)",
+        fontSize: 12,
+        fontFamily: "Montserrat-Bold",
+    },
+
+    avgVal: {
+        width: 62,
+        textAlign: "center",
+        color: "#fff",
+        fontSize: 13,
+        fontFamily: "Montserrat-Regular",
+    },
+
+    avgDivider: {
+        marginTop: 8,
+        marginBottom: 8,
+        height: 1,
+        backgroundColor: "rgba(255,255,255,0.45)",
+    },
 
     /* HIGHLIGHTS */
     sectionH: { color: "#ff1e1e", fontWeight: "900", fontSize: 13, marginBottom: 10, paddingHorizontal: 2 },

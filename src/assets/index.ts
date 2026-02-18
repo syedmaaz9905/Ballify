@@ -12,4 +12,8 @@ export const Images = {
     coachRoleIcon: require("./images/coachRoleIcon.png"),
     prevIcon: require("./images/prevIcon.png"),
     searchIcon: require("./images/searchIcon.png"),
+    facebookIcon: require("./images/facebookIcon.png"),
+    instagramIcon: require("./images/instagramIcon.png"),
+    imoIcon: require("./images/imoIcon.png"),
+    whatsappIcon: require("./images/whatsappIcon.png"),
 };

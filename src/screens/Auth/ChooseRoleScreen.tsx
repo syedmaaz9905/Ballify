@@ -119,11 +119,13 @@ const styles = StyleSheet.create({
     sub: { color: "#999999", fontSize: 10, fontFamily: "Montserrat-Bold" },
 
     card: {
-        marginTop: 60,
+        flex: 1,
+        marginTop: 40,          // was 60 (optional smaller)
+        marginBottom: 80,       // ✅ keeps it away from bottom (prev button area)
         marginHorizontal: 18,
         borderRadius: 30,
         padding: 18,
-        backgroundColor: "rgba(255,255,255,0.08)",
+        backgroundColor: "rgba(255,255,255,0.10)",
         borderWidth: 1,
         borderColor: "rgba(255,255,255,0.12)",
     },

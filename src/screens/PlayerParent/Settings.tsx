@@ -47,9 +47,23 @@ export default function Settings() {
                     {/* Account Settings */}
                     <Text style={styles.sectionTitle}>Account Settings</Text>
 
-                    <Row label="Edit profile" right={<Icon name="chevron-right" size={20} color="#fff" />} />
-                    <Row label="Change password" right={<Icon name="chevron-right" size={20} color="#fff" />} />
-                    <Row label="Add a payment method" right={<Icon name="plus" size={20} color="#fff" />} />
+                    <Row
+                        label="Edit profile"
+                        right={<Icon name="chevron-right" size={20} color="#fff" />}
+                        onPress={() => navigation.navigate("EditProfile")}
+                    />
+
+                    <Row
+                        label="Change password"
+                        right={<Icon name="chevron-right" size={20} color="#fff" />}
+                        onPress={() => navigation.navigate("ChangePassword")}
+                    />
+
+                    <Row
+                        label="Add a payment method"
+                        right={<Icon name="plus" size={20} color="#fff" />}
+                        onPress={() => navigation.navigate("PaymentMethod")}
+                    />
 
                     <View style={styles.row}>
                         <Text style={styles.rowText}>Push notifications</Text>

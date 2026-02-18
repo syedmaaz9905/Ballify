@@ -45,7 +45,10 @@ export default function Profile() {
                         right={<Icon name="chevron-right" size={20} color="#fff" />}
                     /> */}
 
-                    <Pressable style={[styles.row, { marginTop: 6 }]}>
+                    <Pressable
+                        style={[styles.row, { marginTop: 6 }]}
+                        onPress={() => navigation.navigate("LanguageScreen" as never)}
+                    >
                         <Text style={styles.rowText}>Language</Text>
                         <Text style={styles.valueText}>English</Text>
                     </Pressable>
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
         borderRadius: 26,
         borderWidth: 2,
         borderColor: "#ff1e1e",
-        backgroundColor: "rgba(0,0,0,0.55)",
+        backgroundColor: "#000",
         overflow: "hidden",
     },
 

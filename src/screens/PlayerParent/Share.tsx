@@ -25,7 +25,7 @@ const TAB_HEIGHT = 70;
 const { height } = Dimensions.get("window");
 
 export default function Share() {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
 
     return (
         <View style={styles.root}>
@@ -60,7 +60,7 @@ export default function Share() {
 
                         <Text style={styles.sheetTitle}>Share</Text>
 
-                        <Pressable>
+                        <Pressable onPress={() => navigation.navigate("UploadShare")}>
                             <Icon name="upload" size={22} color="#fff" />
                         </Pressable>
                     </View>
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
         borderColor: "#ff1e1e",
         padding: 14,
         height: height * 0.73,
+        backgroundColor: "#000",
     },
     sheetHeader: {
         flexDirection: "row",
