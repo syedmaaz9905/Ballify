@@ -12,9 +12,10 @@ import {
 import Icon from "react-native-vector-icons/Feather";
 import { Images } from "../../assets";
 import BottomTabs from "../../components/BottomTabs";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/RootStackNavigator";
+import { clearAuth } from "../../hooks/useAuthStorage";
 
 const TAB_H = 57;
 const TAB_BOTTOM = Platform.OS === "ios" ? 24 : 14;
@@ -24,6 +25,17 @@ export default function Settings() {
     const [pushEnabled, setPushEnabled] = useState(false);
     const navigation =
         useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    const handleLogout = async () => {
+        await clearAuth();
+
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 0,
+                routes: [{ name: "Login" }],
+            })
+        );
+    };
 
     return (
         <View style={styles.root}>
@@ -91,6 +103,13 @@ export default function Settings() {
                         right={<Icon name="chevron-right" size={20} color="#fff" />}
                         onPress={() => navigation.navigate("PrivacyPolicy")}
                     />
+
+                    <Row
+                        label="Logout"
+                        right={<Icon name="log-out" size={20} color="#ff4d4f" />}
+                        onPress={handleLogout}
+                        textStyle={styles.logoutText}
+                    />
                 </View>
 
                 <BottomTabs active="settings" />
@@ -99,10 +118,20 @@ export default function Settings() {
     );
 }
 
-function Row({ label, right, onPress }: { label: string; right: React.ReactNode; onPress?: () => void }) {
+function Row({
+    label,
+    right,
+    onPress,
+    textStyle,
+}: {
+    label: string;
+    right: React.ReactNode;
+    onPress?: () => void;
+    textStyle?: any;
+}) {
     return (
         <Pressable style={styles.row} onPress={onPress}>
-            <Text style={styles.rowText}>{label}</Text>
+            <Text style={[styles.rowText, textStyle]}>{label}</Text>
             {right}
         </Pressable>
     );
@@ -154,6 +183,11 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
     },
     rowText: { color: "#fff", fontSize: 14, fontFamily: "Montserrat-Regular", },
+
+    logoutText: {
+        color: "#ff4d4f",
+        fontFamily: "Montserrat-SemiBold",
+    },
 
     sectionDivider: {
         height: 1,

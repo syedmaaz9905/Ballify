@@ -6,18 +6,44 @@ import {
     ImageBackground,
     Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../navigation/RootStackNavigator";
 import { Images } from "../assets";
+import { getAccessToken, getOnboardingSeen, getUserData } from "../hooks/useAuthStorage";
 
 export default function SplashScreen() {
     const navigation =
         useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     useEffect(() => {
-        const t = setTimeout(() => navigation.replace("Login"), 1500);
-        return () => clearTimeout(t);
+        const run = async () => {
+            const seen = await getOnboardingSeen();
+            const token = await getAccessToken();
+            const user = await getUserData();
+            const role = user?.role;
+
+            setTimeout(() => {
+                let nextRoute: keyof RootStackParamList = "Onboarding";
+
+                if (!seen) {
+                    nextRoute = "Onboarding";
+                } else if (token) {
+                    nextRoute = role === "coach" ? "CoachHome" : "PlayerParentHome";
+                } else {
+                    nextRoute = "Login";
+                }
+
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [{ name: nextRoute }],
+                    })
+                );
+            }, 1500);
+        };
+
+        run();
     }, [navigation]);
 
     return (

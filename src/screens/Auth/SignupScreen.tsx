@@ -1,4 +1,3 @@
-// src/screens/Auth/SignupScreen.tsx
 import React, { useMemo, useState } from "react";
 import {
     View,
@@ -12,16 +11,21 @@ import {
     Platform,
     ScrollView,
     Dimensions,
+    Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/RootStackNavigator";
 import Icon from "react-native-vector-icons/Feather";
 import { Images } from "../../assets";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function SignupScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const [name, setName] = useState("");
+    const { handleSignup, loading: signupLoading } = useAuth();
+
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
@@ -29,7 +33,50 @@ export default function SignupScreen() {
     const [showConfirm, setShowConfirm] = useState(false);
 
     const { width } = Dimensions.get("window");
-    const logoSize = useMemo(() => Math.min(210, Math.max(130, width * 0.40)), [width]);
+    const logoSize = useMemo(() => Math.min(210, Math.max(130, width * 0.4)), [width]);
+
+    const handleCreateAccount = async () => {
+        try {
+            if (!firstName.trim()) {
+                Alert.alert("Validation", "Please enter first name.");
+                return;
+            }
+
+            if (!lastName.trim()) {
+                Alert.alert("Validation", "Please enter last name.");
+                return;
+            }
+
+            if (!email.trim()) {
+                Alert.alert("Validation", "Please enter email.");
+                return;
+            }
+
+            if (!password.trim()) {
+                Alert.alert("Validation", "Please enter password.");
+                return;
+            }
+
+            if (!confirm.trim()) {
+                Alert.alert("Validation", "Please confirm password.");
+                return;
+            }
+
+            if (password !== confirm) {
+                Alert.alert("Validation", "Passwords do not match.");
+                return;
+            }
+
+            navigation.navigate("ChooseRole", {
+                firstName: firstName.trim(),
+                lastName: lastName.trim(),
+                email: email.trim(),
+                password,
+            } as never);
+        } catch (error: any) {
+            console.log("Signup navigation error:", error);
+        }
+    };
 
     return (
         <View style={styles.root}>
@@ -57,17 +104,29 @@ export default function SignupScreen() {
                         </View>
 
                         <View style={styles.form}>
-                            <Text style={styles.label}>Full Name</Text>
+                            <Text style={styles.label}>First Name</Text>
                             <View style={styles.inputWrap}>
                                 <Icon name="user" size={18} color="#bfbfbf" style={styles.leftIcon} />
                                 <TextInput
-                                    value={name}
-                                    onChangeText={setName}
-                                    placeholder="Enter name"
+                                    value={firstName}
+                                    onChangeText={setFirstName}
+                                    placeholder="Enter first name"
                                     placeholderTextColor="#9a9a9a"
                                     style={styles.input}
                                     autoCapitalize="words"
-                                    textContentType="name"
+                                />
+                            </View>
+
+                            <Text style={[styles.label, { marginTop: 16 }]}>Last Name</Text>
+                            <View style={styles.inputWrap}>
+                                <Icon name="user" size={18} color="#bfbfbf" style={styles.leftIcon} />
+                                <TextInput
+                                    value={lastName}
+                                    onChangeText={setLastName}
+                                    placeholder="Enter last name"
+                                    placeholderTextColor="#9a9a9a"
+                                    style={styles.input}
+                                    autoCapitalize="words"
                                 />
                             </View>
 
@@ -124,8 +183,14 @@ export default function SignupScreen() {
                                 </Pressable>
                             </View>
 
-                            <Pressable style={styles.signupBtn} onPress={() => navigation.navigate("Onboarding")}>
-                                <Text style={styles.signupText}>Create Account</Text>
+                            <Pressable
+                                style={styles.signupBtn}
+                                onPress={handleCreateAccount}
+                                disabled={false}
+                            >
+                                <Text style={styles.signupText}>
+                                    Continue
+                                </Text>
                             </Pressable>
 
                             <View style={styles.loginRow}>
@@ -173,7 +238,7 @@ const styles = StyleSheet.create({
 
     header: { marginTop: 6, marginBottom: 18 },
     h1: { color: "#fff", fontSize: 30, fontWeight: "800" },
-    h2: { color: "#ff2d2d", marginTop: 4, fontSize: 13, fontFamily: "Montserrat-SemiBold", },
+    h2: { color: "#ff2d2d", marginTop: 4, fontSize: 13, fontFamily: "Montserrat-SemiBold" },
 
     form: { marginTop: 8 },
 
@@ -201,6 +266,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 20,
     },
+    disabledBtn: {
+        opacity: 0.7,
+    },
     signupText: { color: "#fff", fontSize: 18, fontFamily: "Montserrat-Medium" },
 
     loginRow: {
@@ -209,7 +277,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 18,
     },
-    muted: { color: "#cfcfcf", fontSize: 12, fontFamily: "Montserrat-SemiBold", },
+    muted: { color: "#cfcfcf", fontSize: 12, fontFamily: "Montserrat-SemiBold" },
     loginLink: { color: "#fff", fontSize: 12, fontFamily: "Montserrat-Bold" },
 
     orText: {

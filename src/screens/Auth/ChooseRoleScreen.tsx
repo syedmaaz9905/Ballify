@@ -1,22 +1,55 @@
-// src/screens/ChooseRoleScreen.tsx  (REPLACE FULL FILE)
-
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable, Image, ImageBackground } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, StyleSheet, Pressable, Image, ImageBackground, Alert } from "react-native";
+import { useNavigation, useRoute, CommonActions, RouteProp } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Images } from "../../assets";
 import type { RootStackParamList } from "../../navigation/RootStackNavigator";
+import { useAuth } from "../../hooks/useAuth";
 
 type Role = "player" | "coach";
 
 export default function ChooseRoleScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const [role, setRole] = useState<Role>("player");
+    const route = useRoute<RouteProp<RootStackParamList, "ChooseRole">>();
+    const { handleSignup, loading } = useAuth();
 
-    const handleSelect = (r: Role) => {
-        setRole(r);
-        if (r === "coach") navigation.replace("CoachHome");
-        else navigation.replace("PlayerParentHome");
+    const [role, setRole] = useState<Role | null>(null);
+
+    const { firstName, lastName, email, password } = route.params;
+
+    const handleRegister = async () => {
+        if (!role) {
+            Alert.alert("Validation", "Please select a role.");
+            return;
+        }
+
+        try {
+            await handleSignup({
+                email,
+                password,
+                firstName,
+                lastName,
+                language: "en",
+                role,
+                profilePicture: "",
+                isPushNotificationEnabled: true,
+            });
+
+            Alert.alert("Success", "Account created successfully.");
+
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [{ name: "Login" }],
+                })
+            );
+        } catch (error: any) {
+            console.log("Signup error:", error?.response?.data || error);
+            Alert.alert(
+                "Signup Failed",
+                error?.response?.data?.message || "Something went wrong."
+            );
+        }
     };
 
     return (
@@ -35,8 +68,8 @@ export default function ChooseRoleScreen() {
                         </View>
 
                         <View>
-                            <Text style={styles.greet}>Morning SAM!</Text>
-                            <Text style={styles.sub}>How Are You Doing Today?</Text>
+                            <Text style={styles.greet}>Choose Role</Text>
+                            <Text style={styles.sub}>Select your account type</Text>
                         </View>
                     </View>
                 </View>
@@ -50,8 +83,11 @@ export default function ChooseRoleScreen() {
                     </View>
 
                     <Pressable
-                        onPress={() => handleSelect("player")}
-                        style={[styles.roleBtn, role === "player" && styles.roleActive]}
+                        onPress={() => setRole("player")}
+                        style={[
+                            styles.roleBtn,
+                            role === "player" ? styles.roleActive : styles.roleInactive,
+                        ]}
                     >
                         <View style={styles.roleIcon}>
                             <Image source={Images.playerRoleIcon} style={styles.roleIconImg} resizeMode="contain" />
@@ -66,8 +102,11 @@ export default function ChooseRoleScreen() {
                     </Pressable>
 
                     <Pressable
-                        onPress={() => handleSelect("coach")}
-                        style={[styles.roleBtn, role === "coach" && styles.roleActive]}
+                        onPress={() => setRole("coach")}
+                        style={[
+                            styles.roleBtn,
+                            role === "coach" ? styles.roleActive : styles.roleInactive,
+                        ]}
                     >
                         <View style={styles.roleIcon}>
                             <Image source={Images.coachRoleIcon} style={styles.roleIconImg} resizeMode="contain" />
@@ -79,6 +118,19 @@ export default function ChooseRoleScreen() {
                                 manage your team, scout opponents, follow teams and stay updated with notification
                             </Text>
                         </View>
+                    </Pressable>
+
+                    <Pressable
+                        style={[
+                            styles.registerBtn,
+                            (!role || loading) && styles.disabledBtn,
+                        ]}
+                        onPress={handleRegister}
+                        disabled={!role || loading}
+                    >
+                        <Text style={styles.registerText}>
+                            {loading ? "Please wait..." : "Register"}
+                        </Text>
                     </Pressable>
                 </View>
 
@@ -120,8 +172,8 @@ const styles = StyleSheet.create({
 
     card: {
         flex: 1,
-        marginTop: 40,          // was 60 (optional smaller)
-        marginBottom: 80,       // ✅ keeps it away from bottom (prev button area)
+        marginTop: 40,
+        marginBottom: 80,
         marginHorizontal: 18,
         borderRadius: 30,
         padding: 18,
@@ -164,18 +216,23 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         paddingHorizontal: 14,
         borderRadius: 16,
-        backgroundColor: "#000",
-        borderWidth: 1,
-        borderColor: "#FF0000",
         marginTop: 14,
+        borderWidth: 1.5,
     },
+
+    roleInactive: {
+        backgroundColor: "rgba(0,0,0,0.78)",
+        borderColor: "rgba(255,255,255,0.18)",
+    },
+
     roleActive: {
-        backgroundColor: "#000",
-        shadowColor: "#FF0000",
-        shadowOpacity: 0.35,
+        backgroundColor: "rgba(0,0,0,0.78)",
+        borderColor: "#E8130D",
+        shadowColor: "#E8130D",
+        shadowOpacity: 0.3,
         shadowRadius: 10,
-        shadowOffset: { width: 0, height: 6 },
-        elevation: 10,
+        shadowOffset: { width: 0, height: 4 },
+        elevation: 8,
     },
 
     roleIcon: {
@@ -191,8 +248,25 @@ const styles = StyleSheet.create({
     },
 
     roleTextWrap: { flex: 1 },
-    roleTitle: { color: "#fff", fontSize: 17, fontFamily: "Montserrat-Bold", },
+    roleTitle: { color: "#fff", fontSize: 17, fontFamily: "Montserrat-Bold" },
     roleDesc: { color: "rgba(255,255,255,0.70)", fontSize: 10, fontFamily: "Montserrat-Regular", lineHeight: 14 },
+
+    registerBtn: {
+        height: 54,
+        borderRadius: 14,
+        backgroundColor: "#E8130D",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 28,
+    },
+    registerText: {
+        color: "#fff",
+        fontSize: 18,
+        fontFamily: "Montserrat-Medium",
+    },
+    disabledBtn: {
+        opacity: 0.45,
+    },
 
     prevBtn: {
         position: "absolute",
@@ -204,5 +278,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 8,
     },
-    prevText: { color: "#AAAAAA", fontSize: 15, fontFamily: "Montserrat-SemiBold", },
+    prevText: { color: "#AAAAAA", fontSize: 15, fontFamily: "Montserrat-SemiBold" },
 });

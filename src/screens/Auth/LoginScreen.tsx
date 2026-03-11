@@ -1,4 +1,3 @@
-// src/screens/Auth/LoginScreen.tsx
 import React, { useMemo, useState } from "react";
 import {
     View,
@@ -12,21 +11,65 @@ import {
     Platform,
     ScrollView,
     Dimensions,
+    Alert,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/RootStackNavigator";
 import Icon from "react-native-vector-icons/Feather";
 import { Images } from "../../assets";
+import { useAuth } from "../../hooks/useAuth";
+import { persistAuthResponse } from "../../hooks/useAuthStorage";
 
 export default function LoginScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const { handleLogin, loading } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPass, setShowPass] = useState(false);
 
     const { width } = Dimensions.get("window");
     const logoSize = useMemo(() => Math.min(220, Math.max(140, width * 0.42)), [width]);
+
+    const onLogin = async () => {
+        try {
+            if (!email.trim()) {
+                Alert.alert("Validation", "Please enter email.");
+                return;
+            }
+
+            if (!password.trim()) {
+                Alert.alert("Validation", "Please enter password.");
+                return;
+            }
+
+            const res = await handleLogin({
+                email: email.trim(),
+                password,
+                keepMeLoggedIn: true,
+            });
+
+            await persistAuthResponse(res);
+
+            const userRole = res?.user?.role;
+
+            Alert.alert("Success", "Login successful.");
+
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [{ name: userRole === "coach" ? "CoachHome" : "PlayerParentHome" }],
+                })
+            );
+        } catch (error: any) {
+            console.log("Login error:", error?.response?.data || error);
+            Alert.alert(
+                "Login Failed",
+                error?.response?.data?.message || "Invalid credentials or something went wrong."
+            );
+        }
+    };
 
     return (
         <View style={styles.root}>
@@ -42,7 +85,11 @@ export default function LoginScreen() {
                         keyboardShouldPersistTaps="handled"
                         showsVerticalScrollIndicator={false}
                     >
-                        <Image source={Images.logo} style={[styles.logo, { width: logoSize, height: logoSize }]} resizeMode="contain" />
+                        <Image
+                            source={Images.logo}
+                            style={[styles.logo, { width: logoSize, height: logoSize }]}
+                            resizeMode="contain"
+                        />
 
                         <View style={styles.header}>
                             <Text style={styles.h1}>Login Account</Text>
@@ -86,8 +133,14 @@ export default function LoginScreen() {
                                 <Text style={styles.forgotText}>Forgot Password</Text>
                             </Pressable>
 
-                            <Pressable style={styles.loginBtn} onPress={() => navigation.navigate("Onboarding")}>
-                                <Text style={styles.loginText}>Login</Text>
+                            <Pressable
+                                style={[styles.loginBtn, loading && styles.disabledBtn]}
+                                onPress={onLogin}
+                                disabled={loading}
+                            >
+                                <Text style={styles.loginText}>
+                                    {loading ? "Please wait..." : "Login"}
+                                </Text>
                             </Pressable>
 
                             <View style={styles.signupRow}>
@@ -135,7 +188,7 @@ const styles = StyleSheet.create({
 
     header: { marginTop: 6, marginBottom: 18 },
     h1: { color: "#fff", fontSize: 32, fontWeight: "800" },
-    h2: { color: "#ff2d2d", marginTop: 4, fontSize: 13, fontFamily: "Montserrat-SemiBold", },
+    h2: { color: "#ff2d2d", marginTop: 4, fontSize: 13, fontFamily: "Montserrat-SemiBold" },
 
     form: { marginTop: 8 },
 
@@ -156,7 +209,7 @@ const styles = StyleSheet.create({
     eyeBtn: { paddingLeft: 10 },
 
     forgotBtn: { alignSelf: "flex-end", marginTop: 10 },
-    forgotText: { color: "#cfcfcf", fontSize: 12, fontFamily: "Montserrat-SemiBold", },
+    forgotText: { color: "#cfcfcf", fontSize: 12, fontFamily: "Montserrat-SemiBold" },
 
     loginBtn: {
         height: 54,
@@ -166,6 +219,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 18,
     },
+    disabledBtn: {
+        opacity: 0.7,
+    },
     loginText: { color: "#fff", fontSize: 18, fontFamily: "Montserrat-Medium" },
 
     signupRow: {
@@ -174,10 +230,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 18,
     },
-    muted: { color: "#cfcfcf", fontSize: 12, fontFamily: "Montserrat-SemiBold", },
+    muted: { color: "#cfcfcf", fontSize: 12, fontFamily: "Montserrat-SemiBold" },
     signupLink: { color: "#fff", fontSize: 12, fontFamily: "Montserrat-Bold" },
 
-    orText: { textAlign: "center", color: "#cfcfcf", marginTop: 18, fontSize: 12, fontFamily: "Montserrat-SemiBold", },
+    orText: {
+        textAlign: "center",
+        color: "#cfcfcf",
+        marginTop: 18,
+        fontSize: 12,
+        fontFamily: "Montserrat-SemiBold",
+    },
 
     socialRow: {
         flexDirection: "row",

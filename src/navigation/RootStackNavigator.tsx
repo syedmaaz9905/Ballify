@@ -36,7 +36,12 @@ export type RootStackParamList = {
     Login: undefined;
     Signup: undefined;
     Onboarding: undefined;
-    ChooseRole: undefined;
+    ChooseRole: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        password: string;
+    };
 
     PlayerParentHome: undefined;
     CoachHome: undefined;

@@ -6,9 +6,9 @@ import {
     ImageBackground,
     Pressable,
     Dimensions,
-    Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
+import AppHeader from "../../components/AppHeader";
 import { Images } from "../../assets";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -28,22 +28,7 @@ export default function PlayerParentHome() {
                 <View style={styles.screenOverlay} />
 
                 {/* HEADER */}
-                <View style={styles.header}>
-                    <View style={styles.headerLeft}>
-                        <View>
-                            <Image
-                                source={Images.profileIcon}
-                                style={{ width: 45, height: 45 }}
-                                resizeMode="contain"
-                            />
-                        </View>
-
-                        <View>
-                            <Text style={styles.greet}>Morning SAM!</Text>
-                            <Text style={styles.sub}>How Are You Doing Today?</Text>
-                        </View>
-                    </View>
-                </View>
+                <AppHeader />
 
                 {/* BODY */}
                 <View style={styles.body}>
@@ -97,20 +82,6 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         backgroundColor: "rgba(0,0,0,0.55)",
     },
-
-    /* HEADER */
-    header: {
-        paddingHorizontal: 20,
-        paddingTop: 50,
-        paddingBottom: 10,
-    },
-    headerLeft: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 12,
-    },
-    greet: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
-    sub: { color: "#999999", fontSize: 10, fontFamily: "Montserrat-Bold" },
 
     /* BODY */
     body: {

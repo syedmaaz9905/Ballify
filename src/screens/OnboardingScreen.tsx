@@ -1,11 +1,10 @@
-// src/screens/OnboardingScreen.tsx  (REPLACE FULL FILE)
-// ✅ removed the 2 role buttons, now only Continue -> ChooseRole screen
 import React from "react";
 import { View, Text, StyleSheet, Pressable, ImageBackground } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Images } from "../assets";
 import type { RootStackParamList } from "../navigation/RootStackNavigator";
+import { setOnboardingSeen } from "../hooks/useAuthStorage";
 
 export default function OnboardingScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -24,7 +23,18 @@ export default function OnboardingScreen() {
                         However, modern generators let you add personality to your placeholder text while maintaining the same benefits. From pirate speak to cupcake ingredients, these specialized generators help your mockups feel more aligned with your brand's tone and industry. Here are some creative alternatives:
                     </Text>
 
-                    <Pressable style={styles.btn} onPress={() => navigation.navigate("ChooseRole")}>
+                    <Pressable
+                        style={styles.btn}
+                        onPress={async () => {
+                            await setOnboardingSeen();
+                            navigation.dispatch(
+                                CommonActions.reset({
+                                    index: 0,
+                                    routes: [{ name: "Login" }],
+                                })
+                            );
+                        }}
+                    >
                         <Text style={styles.btnText}>Let's Go</Text>
                     </Pressable>
                 </View>
