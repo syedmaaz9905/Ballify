@@ -1,13 +1,37 @@
-import React from "react";
-import { View, Text, StyleSheet, ImageBackground, Pressable, Platform, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    Pressable,
+    Platform,
+    ScrollView,
+    ActivityIndicator,
+} from "react-native";
 import { Images } from "../../assets";
 import { useNavigation } from "@react-navigation/native";
-
-const BODY =
-    "Lorem Ipsum Quia Dolor Sit Porro Quisquam Est Qui Amet Consectetur Adipisci, Sed Quia Duis Aut Iure Dolor In Reprehenderit Dolore Magna Aliqua. Porro Quisquam Est Qui Nisi Ut Aliquid Ex Ea Commodi. Culpa Quia Officia Deserunt Ex Mollit Anim Id Est Laborum.However, Modern Generators Let You Add Personality To Your Placeholder Text While Maintaining The Same Benefits. From Pirate Speak To Cupcake Ingredients, These Specialized Generators Help Your Mockups Feel More Aligned With Your Brand’s Tone And Industry. Here Are Some Creative Alternatives:Lorem Ipsum Quia Dolor Sit Porro Quisquam Est Qui Amet Consectetur Adipisci, Sed Quia Duis Aut Iure Dolor In Reprehenderit Dolore Magna Aliqua. Porro Quisquam Est Qui Nisi Ut Aliquid Ex Ea Commodi. Culpa Quia Officia Deserunt Ex Mollit Anim Id Est Laborum.Lorem Ipsum Quia Dolor Sit Porro Quisquam Est Qui Amet Consectetur Adipisci, Sed Quia Duis Aut Iure Dolor In Reprehenderit Dolore Magna Aliqua.";
+import { useContent } from "../../hooks/useContent";
 
 export default function PrivacyPolicy() {
     const navigation = useNavigation();
+
+    const { loading, handleGetPrivacyPolicyContent } = useContent();
+    const [body, setBody] = useState("");
+
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const res = await handleGetPrivacyPolicyContent();
+                const resolvedContent = res?.content ?? res?.data?.content ?? res?.data ?? res ?? "";
+                setBody(typeof resolvedContent === "string" ? resolvedContent : "");
+            } catch (error) {
+                console.log("PRIVACY POLICY ERROR:", error);
+            }
+        };
+
+        loadContent();
+    }, [handleGetPrivacyPolicyContent]);
 
     return (
         <View style={styles.root}>
@@ -21,7 +45,11 @@ export default function PrivacyPolicy() {
 
                         {/* ONLY BODY SCROLLS */}
                         <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll} contentContainerStyle={styles.scrollContent}>
-                            <Text style={styles.body}>{BODY}</Text>
+                            {loading ? (
+                                <ActivityIndicator color="#E8130D" style={{ marginTop: 20 }} />
+                            ) : (
+                                <Text style={styles.body}>{body}</Text>
+                            )}
                         </ScrollView>
 
                         {/* FIXED BUTTON */}

@@ -1,5 +1,4 @@
-// src/screens/PlayerParent/Settings.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -8,6 +7,7 @@ import {
     Pressable,
     Switch,
     Platform,
+    Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { Images } from "../../assets";
@@ -15,7 +15,8 @@ import BottomTabs from "../../components/BottomTabs";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/RootStackNavigator";
-import { clearAuth } from "../../hooks/useAuthStorage";
+import { clearAuth, getUserData, setAuth, getAccessToken } from "../../hooks/useAuthStorage";
+import { useUser } from "../../hooks/useUser";
 
 const TAB_H = 57;
 const TAB_BOTTOM = Platform.OS === "ios" ? 24 : 14;
@@ -23,8 +24,59 @@ const TAB_GAP = TAB_H + TAB_BOTTOM + 16;
 
 export default function Settings() {
     const [pushEnabled, setPushEnabled] = useState(false);
+    const [userId, setUserId] = useState<string | null>(null);
+    const { loading, handleToggleUserNotification, handleGetUserById } = useUser();
     const navigation =
         useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    useEffect(() => {
+        const loadUser = async () => {
+            const user = await getUserData();
+            const currentUserId = user?._id || user?.id;
+            if (!currentUserId) return;
+
+            setUserId(currentUserId);
+            setPushEnabled(!!user.isPushNotificationEnabled);
+
+            const freshUser = await handleGetUserById(currentUserId);
+            const resolvedUser = freshUser?.user ?? freshUser ?? null;
+
+            if (resolvedUser?.isPushNotificationEnabled !== undefined) {
+                setPushEnabled(!!resolvedUser.isPushNotificationEnabled);
+            }
+        };
+
+        loadUser();
+    }, []);
+
+    const handleTogglePushNotification = async () => {
+        if (!userId || loading) return;
+
+        const previousValue = pushEnabled;
+        setPushEnabled(!previousValue);
+
+        try {
+            const res = await handleToggleUserNotification(userId);
+            const updatedUser = res?.user ?? res ?? null;
+
+            if (updatedUser) {
+                const accessToken = await getAccessToken();
+
+                await setAuth({
+                    accessToken,
+                    user: updatedUser,
+                });
+
+                setPushEnabled(!!updatedUser.isPushNotificationEnabled);
+            }
+        } catch (error: any) {
+            setPushEnabled(previousValue);
+            Alert.alert(
+                "Error",
+                error?.response?.data?.message || "Failed to update notification setting"
+            );
+        }
+    };
 
     const handleLogout = async () => {
         await clearAuth();
@@ -81,7 +133,8 @@ export default function Settings() {
                         <Text style={styles.rowText}>Push notifications</Text>
                         <Switch
                             value={pushEnabled}
-                            onValueChange={setPushEnabled}
+                            onValueChange={handleTogglePushNotification}
+                            disabled={loading}
                             trackColor={{ false: "#4b4b4b", true: "#ff1e1e" }}
                             thumbColor={"#fff"}
                         />

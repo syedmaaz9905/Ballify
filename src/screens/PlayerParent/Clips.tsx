@@ -16,6 +16,7 @@ import {
 import Icon from "react-native-vector-icons/Feather";
 import { Images } from "../../assets";
 import BottomTabs from "../../components/BottomTabs";
+import AppHeader from "../../components/AppHeader";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/RootStackNavigator";
@@ -37,16 +38,8 @@ export default function Clips() {
             <ImageBackground source={Images.splashBg} style={styles.bg} resizeMode="cover">
                 <View style={styles.screenOverlay} />
 
-                {/* HEADER (same like other pages) */}
-                <View style={styles.header}>
-                    <View style={styles.headerLeft}>
-                        <Image source={Images.profileIcon} style={{ width: 45, height: 45 }} resizeMode="contain" />
-                        <View>
-                            <Text style={styles.greet}>Morning SAM!</Text>
-                            <Text style={styles.sub}>How Are You Doing Today?</Text>
-                        </View>
-                    </View>
-                </View>
+                {/* HEADER */}
+                <AppHeader />
 
                 {/* CARD */}
                 <View style={[styles.sheet, { marginBottom: TAB_GAP, height: height * 0.73 }]}>
@@ -183,20 +176,6 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         backgroundColor: "rgba(0,0,0,0.55)",
     },
-
-    /* HEADER */
-    header: {
-        paddingHorizontal: 20,
-        paddingTop: 50,
-        paddingBottom: 10,
-    },
-    headerLeft: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 12,
-    },
-    greet: { color: "#fff", fontSize: 20, fontFamily: "Montserrat-Bold" },
-    sub: { color: "#999999", fontSize: 10, fontFamily: "Montserrat-Bold" },
 
     /* CARD */
     sheet: {

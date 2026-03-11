@@ -1,5 +1,3 @@
-// src/screens/PlayerParent/ChangePassword.tsx  (REPLACE FULL FILE)
-
 import React, { useState } from "react";
 import {
     View,
@@ -9,6 +7,8 @@ import {
     Pressable,
     Platform,
     TextInput,
+    Alert,
+    ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { Images } from "../../assets";
@@ -16,6 +16,7 @@ import BottomTabs from "../../components/BottomTabs";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/RootStackNavigator";
+import { useAuth } from "../../hooks/useAuth";
 
 const TAB_H = 57;
 const TAB_BOTTOM = Platform.OS === "ios" ? 24 : 14;
@@ -23,6 +24,7 @@ const TAB_GAP = TAB_H + TAB_BOTTOM + 16;
 
 export default function ChangePassword() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const { loading, handleChangePassword } = useAuth();
 
     const [oldPass, setOldPass] = useState("");
     const [newPass, setNewPass] = useState("");
@@ -31,6 +33,35 @@ export default function ChangePassword() {
     const [showOld, setShowOld] = useState(false);
     const [showNew, setShowNew] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
+
+    const onSubmit = async () => {
+        if (!oldPass.trim() || !newPass.trim() || !confirm.trim()) {
+            Alert.alert("Error", "Please fill all fields");
+            return;
+        }
+
+        if (newPass !== confirm) {
+            Alert.alert("Error", "New password and confirm password do not match");
+            return;
+        }
+
+        try {
+            const res = await handleChangePassword({
+                oldPassword: oldPass,
+                newPassword: newPass,
+            });
+
+            Alert.alert("Success", res?.message || "Password changed successfully");
+            setOldPass("");
+            setNewPass("");
+            setConfirm("");
+        } catch (error: any) {
+            Alert.alert(
+                "Error",
+                error?.response?.data?.message || "Failed to change password"
+            );
+        }
+    };
 
     return (
         <View style={styles.root}>
@@ -75,8 +106,16 @@ export default function ChangePassword() {
                             onToggle={() => setShowConfirm((v) => !v)}
                         />
 
-                        <Pressable style={styles.primaryBtn}>
-                            <Text style={styles.primaryBtnText}>Set Password</Text>
+                        <Pressable
+                            style={[styles.primaryBtn, loading && { opacity: 0.7 }]}
+                            onPress={onSubmit}
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <ActivityIndicator color="#fff" />
+                            ) : (
+                                <Text style={styles.primaryBtnText}>Set Password</Text>
+                            )}
                         </Pressable>
                     </View>
                 </View>
@@ -209,6 +248,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ff1e1e",
         alignItems: "center",
         justifyContent: "center",
+        opacity: 1,
     },
     primaryBtnText: { color: "#fff", fontSize: 16, fontFamily: "Montserrat-Bold" },
 });

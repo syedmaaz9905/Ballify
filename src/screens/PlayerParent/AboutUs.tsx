@@ -1,14 +1,37 @@
-// src/screens/PlayerParent/AboutUs.tsx
-import React from "react";
-import { View, Text, StyleSheet, ImageBackground, Pressable, Platform, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    Pressable,
+    Platform,
+    ScrollView,
+    ActivityIndicator,
+} from "react-native";
 import { Images } from "../../assets";
 import { useNavigation } from "@react-navigation/native";
-
-const BODY =
-    "Lorem ipsum quia dolor sit porro quisquam est qui amet consectetur adipisci, sed quia duis aute irure dolor in reprehenderit dolore magna aliqua, porro quisquan est qui nisi ut aliquid ex ea commodo. Culpa quia officia deserunt mollit anim id est laborum. However, modern generators let you add personality to your placeholder text while maintaining the same benefits. From pirate speak to cupcake ingredients, these specialized generators help your mockups feel more aligned with your brand's tone and industry. Here are some creative alternatives:";
+import { useContent } from "../../hooks/useContent";
 
 export default function AboutUs() {
     const navigation = useNavigation();
+
+    const { loading, handleGetAboutUsContent } = useContent();
+    const [body, setBody] = useState("");
+
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const res = await handleGetAboutUsContent();
+                const resolvedContent = res?.content ?? res?.data?.content ?? res?.data ?? res ?? "";
+                setBody(typeof resolvedContent === "string" ? resolvedContent : "");
+            } catch (error) {
+                console.log("ABOUT US ERROR:", error);
+            }
+        };
+
+        loadContent();
+    }, [handleGetAboutUsContent]);
 
     return (
         <View style={styles.root}>
@@ -19,7 +42,11 @@ export default function AboutUs() {
                     <View style={styles.card}>
                         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.cardContent}>
                             <Text style={styles.title}>About Us</Text>
-                            <Text style={styles.body}>{BODY}</Text>
+                            {loading ? (
+                                <ActivityIndicator color="#E8130D" style={{ marginTop: 20 }} />
+                            ) : (
+                                <Text style={styles.body}>{body}</Text>
+                            )}
 
                             <Pressable style={styles.btn} onPress={() => navigation.goBack()}>
                                 <Text style={styles.btnText}>Back</Text>

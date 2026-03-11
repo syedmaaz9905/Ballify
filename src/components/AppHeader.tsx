@@ -18,6 +18,7 @@ export default function AppHeader() {
                 if (!userId) return;
 
                 const res = await handleGetUserById(userId);
+                console.log(res)
 
                 const fullName = `${res?.firstName ?? ""} ${res?.lastName ?? ""}`.trim();
                 setUserName(fullName || "User");
