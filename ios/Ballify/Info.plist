@@ -26,6 +26,12 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>We need camera access to record videos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need microphone access to record videos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need photo library access to select videos.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

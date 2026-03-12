@@ -6,6 +6,8 @@ import SignupScreen from "../screens/Auth/SignupScreen";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import PlayerParentHome from "../screens/PlayerParent/PlayerParentHome";
 import Record from "../screens/PlayerParent/Record";
+import RecordUploadPreview from "../screens/PlayerParent/RecordUploadPreview";
+import RecordUploading from "../screens/PlayerParent/RecordUploading";
 import Clips from "../screens/PlayerParent/Clips";
 import Share from "../screens/PlayerParent/Share";
 import ClipsPreview from "../screens/PlayerParent/ClipsPreview";
@@ -46,6 +48,16 @@ export type RootStackParamList = {
     PlayerParentHome: undefined;
     CoachHome: undefined;
     Record: undefined;
+    RecordUploadPreview: {
+        videoUri: string;
+        fileName?: string;
+        type?: string;
+    };
+    RecordUploading: {
+        videoUri: string;
+        fileName?: string;
+        type?: string;
+    };
     Clips: undefined;
     Share: undefined;
     ClipsPreview: undefined;
@@ -84,6 +96,8 @@ export default function RootStackNavigator() {
 
             <Stack.Screen name="PlayerParentHome" component={PlayerParentHome} />
             <Stack.Screen name="Record" component={Record} />
+            <Stack.Screen name="RecordUploadPreview" component={RecordUploadPreview} />
+            <Stack.Screen name="RecordUploading" component={RecordUploading} />
             <Stack.Screen name="Clips" component={Clips} />
             <Stack.Screen name="Share" component={Share} />
             <Stack.Screen name="ClipsPreview" component={ClipsPreview} />

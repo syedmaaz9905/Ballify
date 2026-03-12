@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { Images } from "../assets";
-import { getAccessToken, getUserData } from "../hooks/useAuthStorage";
+import { getAccessToken, getUserData, setAuth } from "../hooks/useAuthStorage";
+import { useFocusEffect } from "@react-navigation/native";
 import { useUser } from "../hooks/useUser";
 
 export default function AppHeader() {
@@ -9,27 +10,37 @@ export default function AppHeader() {
     const [userName, setUserName] = useState("User");
     const [profilePicture, setProfilePicture] = useState<string>("");
 
-    useEffect(() => {
-        const loadUser = async () => {
-            try {
-                const storedUser = await getUserData();
-                const userId = storedUser?.id;
+    useFocusEffect(
+        useCallback(() => {
+            const loadUser = async () => {
+                try {
+                    const storedUser = await getUserData();
+                    const userId = storedUser?._id || storedUser?.id;
 
-                if (!userId) return;
+                    if (!userId) return;
 
-                const res = await handleGetUserById(userId);
-                console.log(res)
+                    const res = await handleGetUserById(userId);
+                    const resolvedUser = res?.user ?? res ?? null;
 
-                const fullName = `${res?.firstName ?? ""} ${res?.lastName ?? ""}`.trim();
-                setUserName(fullName || "User");
-                setProfilePicture(res?.profilePicture || "");
-            } catch (error) {
-                console.log("HEADER_USER_ERROR:", error);
-            }
-        };
+                    if (!resolvedUser) return;
 
-        loadUser();
-    }, [handleGetUserById]);
+                    const fullName = `${resolvedUser?.firstName ?? ""} ${resolvedUser?.lastName ?? ""}`.trim();
+                    setUserName(fullName || "User");
+                    setProfilePicture(resolvedUser?.profilePicture || "");
+
+                    const accessToken = await getAccessToken();
+                    await setAuth({
+                        accessToken,
+                        user: resolvedUser,
+                    });
+                } catch (error) {
+                    console.log("HEADER_USER_ERROR:", error);
+                }
+            };
+
+            loadUser();
+        }, [handleGetUserById])
+    );
 
     return (
         <View style={styles.header}>
